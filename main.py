@@ -1,4 +1,3 @@
 print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
 
-
-vhhggvghv
+print("ya")
