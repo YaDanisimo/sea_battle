@@ -1,0 +1,20 @@
+# PyCharm
+.idea/
+*.iml
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Виртуальные окружения
+venv/
+.venv/
+env/
+
+# Переменные окружения
+.env
+
+# Прочее
+.DS_Store
