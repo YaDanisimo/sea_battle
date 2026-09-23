@@ -1,5 +1,1 @@
-import random
-import sys
-import os
-
-print(1)
+# здесь происходит управление всеми скриптами
