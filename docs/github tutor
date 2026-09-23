@@ -1,0 +1,66 @@
+## PyCharm — горячие клавиши
+Ctrl+K                    Commit: выбрать файлы галочками → сообщение → Commit
+Ctrl+Shift+K              Push закоммиченного
+Ctrl+T                    Update Project (= git pull)
+Ctrl+Shift+`              Ветки: создать / переключить
+Alt+9                     Панель Git (история, конфликты)
+Ctrl+Alt+Shift+↓          Diff файла
+
+## Отправить только нужные файлы
+Ctrl+K → снять галочки с лишнего → оставить свои → Commit → Ctrl+Shift+K
+git rm --cached path/to/file     # убрать файл из-под контроля (уже закоммичен)
+
+## Забрать чужие изменения (безопасно, не затирает твоё)
+git fetch origin
+git merge origin/main
+
+## Забрать один файл с сервера (ЗАТИРАЕТ твой!)
+git fetch origin
+git checkout origin/main -- game/renderer.py
+
+## Посмотреть файл с сервера, не трогая свой
+git show origin/main:game/renderer.py
+
+## Что затирает работу
+git pull / merge                          → ничего (конфликт вместо затирания)
+git checkout origin/main -- <файл>        → твой файл версией из main
+git checkout -- <файл>                    → несохранённые правки
+git reset --hard                          → всё незакоммиченное
+git push --force                          → чужие коммиты на сервере
+
+
+## Рабочий цикл
+git checkout main
+git pull
+git checkout -b feature/xxx
+
+Ctrl+K → Commit        # коммить часто
+Ctrl+Shift+K → Push
+
+git fetch origin
+git merge origin/main  # перед PR
+
+git checkout main
+git pull
+git branch -d feature/xxx
+
+
+## Часто нужное
+git status
+git diff
+git log --oneline --graph --all
+git stash          # убрать изменения временно
+git stash pop      # вернуть
+git reflog         # спасти потерянное
+git branch -a
+
+
+## Правило
+Пуш = коммиты, а не файлы. Хочешь один файл — закоммить только его.
+Коммить часто — единственная надёжная страховка.
+
+Незакоммичено + пересекается с merge	    Merge откажется, ничего не тронет
+Незакоммичено + не пересекается	            Merge пройдёт, твоё останется
+Закоммичено + разные файлы	                Merge сольёт тихо
+Закоммичено + разные места одного файла	    Merge сольёт тихо
+Закоммичено + одни и те же строки	        Окно конфликта, решаешь вручную

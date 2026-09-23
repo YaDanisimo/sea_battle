@@ -1,4 +1,5 @@
-def func(a, b)
-    return a + b
+print("heey")
 
-print(func(2, 3))
+a = 2
+for i in range(a):
+    print(3)
