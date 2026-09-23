@@ -1,5 +1,5 @@
-print(3)
+a = 3
+b = 2
 
-print(5)
-
-print(1234)
+for i in range(a):
+    print(b)
