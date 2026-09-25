@@ -1,0 +1,12 @@
+def func(a: type, b: type) -> type # краткое описание
+    """
+    описание функции
+
+    return: что выводит функции
+    """
+
+    code
+    code
+    code
+
+    return result
