@@ -1,5 +1,5 @@
 # здесь происходит управление всеми скриптами
-from game.board import init_board, render, render_ships, init_ships
+from game.board import init_board, render, render_ships
 from game.menu import main_menu
 from game.clear_console import clear_console
 
@@ -15,7 +15,6 @@ while True:
         break
     elif command == "3":
         board = init_board()
-        board = init_ships(board)
         #render(board)
         render_ships(board)
         input("Нажмите Enter для продолжения")
