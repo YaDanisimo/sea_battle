@@ -102,12 +102,12 @@ def render(board: list):
     alp = ("а", "б", "в", "г", "д",
             "е", "ё", "ж", "з", "и")
 
-    print("   ", *[i for i in range(1, 11)], sep="  ")
-    print("  ", "_" * 34, sep="")
+    print("  ", *[i for i in range(1, 11)], sep="  ")
+    print(" ", "_" * 23, sep="")
     for i in range(10):
-        print(alp[i], end=" ")
-        print("|", *[j[0] for j in board[i]], "|", sep="  ")
-    print("  ", "_" * 34, sep="")
+        print(alp[i], end="")
+        print("|", *[j[0] for j in board[i]], "|", sep=" ")
+    print(" ", "_" * 23, sep="")
 
 
 # для тестов
@@ -115,12 +115,12 @@ def render_ships1(board1: list):
     board = board1.copy()
     alp = ("а", "б", "в", "г", "д",
             "е", "ё", "ж", "з", "и")
-    print("   ", *[i for i in range(1, 11)], sep="  ")
-    print("  ", "_" * 34, sep="")
+    print("  ", *[i for i in range(1, 11)], sep=" ")
+    print("  ", "_" * 23, sep="")
     for i in range(10):
         print(alp[i], end=" ")
         print("|", *[j for j in board[i]], "|", sep="  ")
-    print("  ", "_" * 34, sep="")
+    print("  ", "_" * 23, sep="")
 
 def render_ships(board1: list):
     board = board1.copy()
@@ -132,9 +132,9 @@ def render_ships(board1: list):
                 board[i][j][0] = "@"
             if board[i][j][1] == 2:
                 board[i][j][0] = ","
-    print("   ", *[i for i in range(1, 11)], sep="  ")
-    print("  ", "_" * 34, sep="")
+    print(" ", *[i for i in range(1, 11)], sep=" ")
+    print("  ", "_" * 23, sep="")
     for i in range(10):
         print(alp[i], end=" ")
-        print("|", *[j[0] for j in board[i]], "|", sep="  ")
-    print("  ", "_" * 34, sep="")
+        print("|", *[j[0] for j in board[i]], "|", sep=" ")
+    print("  ", "_" * 23, sep="")

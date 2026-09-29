@@ -24,6 +24,7 @@ while True:
     elif command == "3":
         board = init_board()
         render_ships(board)
+        input()
     elif command == "f":
         board = init_board()
         render(board)
