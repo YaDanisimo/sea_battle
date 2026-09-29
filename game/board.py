@@ -110,6 +110,7 @@ def render(board: list):
     print("  ", "_" * 34, sep="")
 
 
+# для тестов
 def render_ships1(board1: list):
     board = board1.copy()
     alp = ("а", "б", "в", "г", "д",
@@ -121,7 +122,6 @@ def render_ships1(board1: list):
         print("|", *[j for j in board[i]], "|", sep="  ")
     print("  ", "_" * 34, sep="")
 
-# для тестов
 def render_ships(board1: list):
     board = board1.copy()
     alp = ("а", "б", "в", "г", "д",
