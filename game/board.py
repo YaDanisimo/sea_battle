@@ -82,9 +82,6 @@ def create_empty_board() -> list:
     :return: 2D-матрица 10x10 с ячейками типа [Symbol, Type, Ship_index],
              где Symbol, Type и Ship_index по умолчанию равны '.', "EMPTY" и -1
     """
-    [".", SHIP, 0]
-    ["X", SHIP, 3]
-    [".", EMPTY, -1]
 
     board = []
     for i in range(10):
