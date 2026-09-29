@@ -82,6 +82,10 @@ def create_empty_board() -> list:
     :return: 2D-матрица 10x10 с ячейками типа [Symbol, Type, Ship_index],
              где Symbol, Type и Ship_index по умолчанию равны '.', "EMPTY" и -1
     """
+    [".", SHIP, 0]
+    ["X", SHIP, 3]
+    [".", EMPTY, -1]
+
     board = []
     for i in range(10):
         board.append([[".", 0, -1] for _ in range(10)])
@@ -109,6 +113,16 @@ def render(board: list):
     print("  ", "_" * 34, sep="")
 
 
+def render_ships1(board1: list):
+    board = board1.copy()
+    alp = ("а", "б", "в", "г", "д",
+            "е", "ё", "ж", "з", "и")
+    print("   ", *[i for i in range(1, 11)], sep="  ")
+    print("  ", "_" * 34, sep="")
+    for i in range(10):
+        print(alp[i], end=" ")
+        print("|", *[j for j in board[i]], "|", sep="  ")
+    print("  ", "_" * 34, sep="")
 
 # для тестов
 def render_ships(board1: list):
