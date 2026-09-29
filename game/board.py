@@ -102,10 +102,10 @@ def render(board: list):
     alp = ("а", "б", "в", "г", "д",
             "е", "ё", "ж", "з", "и")
 
-    print("  ", *[i for i in range(1, 11)], sep="  ")
+    print("  ", *[i for i in range(1, 11)], sep=" ")
     print(" ", "_" * 23, sep="")
     for i in range(10):
-        print(alp[i], end="")
+        print(alp[i], end=" ")
         print("|", *[j[0] for j in board[i]], "|", sep=" ")
     print(" ", "_" * 23, sep="")
 
