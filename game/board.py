@@ -102,12 +102,12 @@ def render(board: list):
     alp = ("а", "б", "в", "г", "д",
             "е", "ё", "ж", "з", "и")
 
-    print("  ", *[i for i in range(1, 11)], sep=" ")
-    print(" ", "_" * 23, sep="")
+    print("   ", *[i for i in range(1, 11)], sep=" ")
+    print("  ", "_" * 23, sep="")
     for i in range(10):
         print(alp[i], end=" ")
         print("|", *[j[0] for j in board[i]], "|", sep=" ")
-    print(" ", "_" * 23, sep="")
+    print("  ", "_" * 23, sep="")
 
 
 # для тестов
@@ -132,9 +132,18 @@ def render_ships(board1: list):
                 board[i][j][0] = "@"
             if board[i][j][1] == 2:
                 board[i][j][0] = ","
-    print(" ", *[i for i in range(1, 11)], sep=" ")
-    print("  ", "_" * 23, sep="")
+    print("  ", *[i for i in range(1, 11)], sep=" ")
+    print("   ", "_" * 23, sep="")
     for i in range(10):
         print(alp[i], end=" ")
         print("|", *[j[0] for j in board[i]], "|", sep=" ")
     print("  ", "_" * 23, sep="")
+
+#ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+
+# [".", SHIP, 2] б2
+# б2
+# попал, б2 = "X"
+# index = board[б][2]
+# ships[index] -= 1
+# if ships[index] = 0: потопил, закрасить все соседние поля
