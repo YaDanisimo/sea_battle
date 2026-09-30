@@ -1,5 +1,4 @@
-# здесь происходит управление всеми скриптами
-from game.board import init_board, render
+from game.board import init_board
 from game.menu import main_menu, rule_menu, creator_menu, donat_menu
 from game.clear_console import clear_console
 from game.game import game
@@ -12,7 +11,8 @@ while True:
     command = input().lower()
     clear_console()
     if command in ("1", "играть"):
-        game()
+        board, ships_positions = init_board()
+        game(board, ships_positions)
     elif command in ("2", "правила"):
         rule_menu()
         input()

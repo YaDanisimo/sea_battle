@@ -31,8 +31,9 @@ def is_ship_fit(board, x_pos, y_pos, dx, dy, ln):
     return True
 
 
-def place_ship(board: list, ln: int, idx: int) -> list:
+def place_ship(board: list, ln: int, idx: int) -> (list, list):
     """Ставит указанный корабль на поле"""
+    ship_cords = []
     while True:
         vector = random.choice(["u", "r"])
         x_pos = random.randint(0, 9)
@@ -50,15 +51,17 @@ def place_ship(board: list, ln: int, idx: int) -> list:
                     if x_add == 0 and y_add == 0:
                         board[y_pos][x_pos][1] = 1
                         board[y_pos][x_pos][2] = idx
+                        ship_cords.append((y_pos, x_pos))
                     else:
-                        if 0 <= y_pos + y_add <= 9 and 0 <= x_pos + x_add <= 9:
-                            if  board[y_pos + y_add][x_pos + x_add][1] == 0:
-                                board[y_pos + y_add][x_pos + x_add][1] = 2
+                        x, y = x_pos + x_add, y_pos + y_add
+                        if 0 <= y <= 9 and 0 <= x <= 9:
+                            if  board[y][x][1] == 0:
+                                board[y][x][1] = 2
 
             x_pos += dx
             y_pos += dy
 
-        return board
+        return board, ship_cords
 
 
 def create_empty_board() -> list:
@@ -92,27 +95,28 @@ def create_empty_board() -> list:
     return board
 
 
-def init_board() -> list:
+def init_board() -> (list, dict):
     """Создаёт поле, вызывает расстановку кораблей"""
     board = create_empty_board()
+    ships_positions = {}
 
     for idx, ln in enumerate(ships):
-        board = place_ship(board, ln, idx)
+        board, ship_cords = place_ship(board, ln, idx)
+        ships_positions[idx] = ship_cords
 
-    return board
+    return board, ships_positions
 
 
 def render(board: list):
     """Выводит игровое поле таким, каким его должен видеть игрок"""
     alp = ("а", "б", "в", "г", "д",
-            "е", "ё", "ж", "з", "и")
+            "е", "ж", "з", "и", "к")
 
-    print("   ", *[i for i in range(1, 11)], sep=" ")
-    print("  ", "=" * 23, sep="")
+    print("       ", *[i for i in range(1, 11)], sep=" ")
+    print("      ", "=" * 23, sep="")
 
     for i in range(10):
-        print(alp[i], end=" ")
+        print("   ", alp[i], end=" ")
         print("|", *[j[0] for j in board[i]], "|", sep=" ")
 
-    print("  ", "=" * 23, sep="")
-
+    print("      ", "=" * 23, sep="")
