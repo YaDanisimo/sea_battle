@@ -1,4 +1,3 @@
-# игровое поле / расстановка
 import random
 
 
@@ -6,8 +5,11 @@ EMPTY = 0
 SHIP = 1
 BLOCKED = 2
 
+ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+
 
 def is_ship_fit(board, x_pos, y_pos, dx, dy, ln):
+    """Проверка, можно ли поставить корабль в указанные клетки"""
     for i in range(ln):
         if not( 0 <= y_pos <= 9 and 0 <= x_pos <= 9 ):
             return False
@@ -30,6 +32,7 @@ def is_ship_fit(board, x_pos, y_pos, dx, dy, ln):
 
 
 def place_ship(board: list, ln: int, idx: int) -> list:
+    """Ставит указанный корабль на поле"""
     while True:
         vector = random.choice(["u", "r"])
         x_pos = random.randint(0, 9)
@@ -57,6 +60,7 @@ def place_ship(board: list, ln: int, idx: int) -> list:
 
         return board
 
+
 def create_empty_board() -> list:
     """
     Создаёт 2D-матрицу 10x10 - пустое игровое поле.
@@ -82,62 +86,33 @@ def create_empty_board() -> list:
     :return: 2D-матрица 10x10 с ячейками типа [Symbol, Type, Ship_index],
              где Symbol, Type и Ship_index по умолчанию равны '.', "EMPTY" и -1
     """
-    [".", SHIP, 0]
-    ["X", SHIP, 3]
-    [".", EMPTY, -1]
-
     board = []
     for i in range(10):
         board.append([[".", 0, -1] for _ in range(10)])
     return board
 
+
 def init_board() -> list:
-    """Создаёт поле и расставляет корабли."""
+    """Создаёт поле, вызывает расстановку кораблей"""
     board = create_empty_board()
-    ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
     for idx, ln in enumerate(ships):
         board = place_ship(board, ln, idx)
 
     return board
 
+
 def render(board: list):
+    """Выводит игровое поле таким, каким его должен видеть игрок"""
     alp = ("а", "б", "в", "г", "д",
             "е", "ё", "ж", "з", "и")
 
-    print("   ", *[i for i in range(1, 11)], sep="  ")
-    print("  ", "_" * 34, sep="")
+    print("   ", *[i for i in range(1, 11)], sep=" ")
+    print("  ", "=" * 23, sep="")
+
     for i in range(10):
         print(alp[i], end=" ")
-        print("|", *[j[0] for j in board[i]], "|", sep="  ")
-    print("  ", "_" * 34, sep="")
+        print("|", *[j[0] for j in board[i]], "|", sep=" ")
 
+    print("  ", "=" * 23, sep="")
 
-def render_ships1(board1: list):
-    board = board1.copy()
-    alp = ("а", "б", "в", "г", "д",
-            "е", "ё", "ж", "з", "и")
-    print("   ", *[i for i in range(1, 11)], sep="  ")
-    print("  ", "_" * 34, sep="")
-    for i in range(10):
-        print(alp[i], end=" ")
-        print("|", *[j for j in board[i]], "|", sep="  ")
-    print("  ", "_" * 34, sep="")
-
-# для тестов
-def render_ships(board1: list):
-    board = board1.copy()
-    alp = ("а", "б", "в", "г", "д",
-            "е", "ё", "ж", "з", "и")
-    for i in range(10):
-        for j in range(10):
-            if board[i][j][1] == 1:
-                board[i][j][0] = "@"
-            if board[i][j][1] == 2:
-                board[i][j][0] = ","
-    print("   ", *[i for i in range(1, 11)], sep="  ")
-    print("  ", "_" * 34, sep="")
-    for i in range(10):
-        print(alp[i], end=" ")
-        print("|", *[j[0] for j in board[i]], "|", sep="  ")
-    print("  ", "_" * 34, sep="")
