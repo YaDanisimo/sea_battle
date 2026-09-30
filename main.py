@@ -1,36 +1,27 @@
 # здесь происходит управление всеми скриптами
-from game.board import init_board, render, render_ships, render_ships1
-from game.menu import main_menu, rule_menu
+from game.board import init_board, render
+from game.menu import main_menu, rule_menu, creator_menu, donat_menu
 from game.clear_console import clear_console
+from game.game import game
 
 
 while True:
     clear_console()
     main_menu()
 
-    command = input("Введите команду: ").lower()
+    command = input().lower()
+    clear_console()
     if command in ("1", "играть"):
-        print("game")
-        board = init_board()
-        render(board)
-        input()
+        game()
     elif command in ("2", "правила"):
         rule_menu()
+        input()
     elif command in ("3", "выход"):
         break
-    elif command == "5":
-        board = init_board()
-        #render(board)
-        render_ships1(board)
-        input("Нажмите Enter для продолжения")
-    elif command == "4":
-        board = init_board()
-        render_ships(board)
+    elif command in ("4", "авторы"):
+        creator_menu()
         input()
-    elif command == "f":
-        board = init_board()
-        render(board)
-        render_ships(board)
-        render_ships1(board)
+    elif command in ("5", "донат"):
+        donat_menu()
         input()
 
