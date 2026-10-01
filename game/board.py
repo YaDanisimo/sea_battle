@@ -110,7 +110,7 @@ def create_empty_board() -> list:
     """
     board = []
     for i in range(10):
-        board.append([[".", 0, -1] for _ in range(10)])
+        board.append([[".", EMPTY, -1] for _ in range(10)])
     return board
 
 

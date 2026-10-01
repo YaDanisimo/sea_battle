@@ -98,10 +98,10 @@ def game(board: list, ships_positions: dict) -> None:
             print("Потопил!")
             if  sum(ships) == 0:
                 break
-        if digit == 8:
-            break
-    print("\t\t\t ПОБЕДА!")
-    print(f"\tВы произвели выстрелов: {count_turns}")
+        #if digit == 8:
+        #    break
+    print("\t ПОБЕДА!")
+    print(f"Вы произвели выстрелов: {count_turns}")
     print()
     print("Нажмите Enter для перехода в меню")
     input()
