@@ -8,31 +8,50 @@ BLOCKED = 2
 ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
 
-def is_ship_fit(board, x_pos, y_pos, dx, dy, ln):
-    """Проверка, можно ли поставить корабль в указанные клетки"""
+def is_ship_fit(board, pos_x, pos_y, dx, dy, ln):
+    """
+    Проверяет, можно ли разместить корабль заданной длины и направления,
+    начиная с клетки (pos_x, pos_y), не задевая другие корабли и границы
+
+    :param board: игровое поле (2д-матрица)
+    :param pos_x: начальная координата X (горизонталь)
+    :param pos_y: начальная координата Y (вертикаль)
+    :param dx: смещение по X за шаг (0 или 1)
+    :param dy: смещение по Y за шаг (0 или 1)
+    :param ln: длина корабля
+    :return: True, если размещение возможно, иначе False
+    """
     for i in range(ln):
-        if not( 0 <= y_pos <= 9 and 0 <= x_pos <= 9 ):
+        if not( 0 <= pos_y <= 9 and 0 <= pos_x <= 9 ):
             return False
 
         for x_add in (-1, 0, 1):
             for y_add in (-1, 0, 1):
                 if x_add == 0 and y_add == 0:
-                    if board[y_pos][x_pos][1] in (SHIP, BLOCKED):
+                    if board[pos_y][pos_x][1] in (SHIP, BLOCKED):
                         return False
 
-                x_check, y_check = x_pos + x_add, y_pos + y_add
+                x_check, y_check = pos_x + x_add, pos_y + y_add
                 if 0 <= x_check <= 9 and 0 <= y_check <= 9 \
                     and board[y_check][x_check][1] == SHIP:
                         return False
 
-        y_pos += dy
-        x_pos += dx
+        pos_y += dy
+        pos_x += dx
 
     return True
 
 
 def place_ship(board: list, ln: int, idx: int) -> (list, list):
-    """Ставит указанный корабль на поле"""
+    """
+    Ставит указанный корабль на поле, обновляет карту и
+    записывает занятые им координаты в список
+
+    :param board: Игровое поле (2д-матрица)
+    :param ln: длина корабля
+    :param idx: индекс корабля
+    :return: список координат, на которых расположен корабль
+    """
     ship_cords = []
     while True:
         vector = random.choice(["u", "r"])
@@ -61,12 +80,12 @@ def place_ship(board: list, ln: int, idx: int) -> (list, list):
             x_pos += dx
             y_pos += dy
 
-        return board, ship_cords
+        return ship_cords
 
 
 def create_empty_board() -> list:
     """
-    Создаёт 2D-матрицу 10x10 - пустое игровое поле.
+    Создаёт 2д-матрицу 10x10 - пустое игровое поле.
     Каждая ячейка представляет собой список из 3 элементов:
             Символ:
                     '.' - пустая клетка
@@ -96,19 +115,29 @@ def create_empty_board() -> list:
 
 
 def init_board() -> (list, dict):
-    """Создаёт поле, вызывает расстановку кораблей"""
+    """
+    Создаёт поле, вызывает расстановку кораблей и
+    связывает координаты кораблей с их индексами
+
+    :return: игровое поле и словарь {индекс корабля: список координат}
+    """
     board = create_empty_board()
     ships_positions = {}
 
     for idx, ln in enumerate(ships):
-        board, ship_cords = place_ship(board, ln, idx)
+        ship_cords = place_ship(board, ln, idx)
         ships_positions[idx] = ship_cords
 
     return board, ships_positions
 
 
 def render(board: list):
-    """Выводит игровое поле таким, каким его должен видеть игрок"""
+    """
+    Выводит игровое поле таким, каким его должен видеть игрок
+
+    :param board: игровое поле
+    :return: None
+    """
     alp = ("а", "б", "в", "г", "д",
             "е", "ж", "з", "и", "к")
 
