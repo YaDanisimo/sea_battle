@@ -22,20 +22,14 @@ def is_ship_fit(board, pos_x, pos_y, dx, dy, ln):
     :return: True, если размещение возможно, иначе False
     """
     for i in range(ln):
+        # проверка границ
         if not( 0 <= pos_y <= 9 and 0 <= pos_x <= 9 ):
             return False
+        # проверка координаты
+        if board[pos_y][pos_x][1] in (SHIP, BLOCKED):
+            return False
 
-        for x_add in (-1, 0, 1):
-            for y_add in (-1, 0, 1):
-                if x_add == 0 and y_add == 0:
-                    if board[pos_y][pos_x][1] in (SHIP, BLOCKED):
-                        return False
-
-                x_check, y_check = pos_x + x_add, pos_y + y_add
-                if 0 <= x_check <= 9 and 0 <= y_check <= 9 \
-                    and board[y_check][x_check][1] == SHIP:
-                        return False
-
+        #переход к следующей координате
         pos_y += dy
         pos_x += dx
 
@@ -67,11 +61,11 @@ def place_ship(board: list, ln: int, idx: int) -> (list, list):
         for _ in range(ln):
             for x_add in (-1, 0, 1):
                 for y_add in (-1, 0, 1):
-                    if x_add == 0 and y_add == 0:
+                    if x_add == 0 and y_add == 0: # ставим корабль
                         board[y_pos][x_pos][1] = 1
                         board[y_pos][x_pos][2] = idx
                         ship_cords.append((y_pos, x_pos))
-                    else:
+                    else: # помечаем соседнюю с кораблём клетку
                         x, y = x_pos + x_add, y_pos + y_add
                         if 0 <= y <= 9 and 0 <= x <= 9:
                             if  board[y][x][1] == 0:
@@ -143,9 +137,7 @@ def render(board: list):
 
     print("       ", *[i for i in range(1, 11)], sep=" ")
     print("      ", "=" * 23, sep="")
-
     for i in range(10):
         print("   ", alp[i], end=" ")
         print("|", *[j[0] for j in board[i]], "|", sep=" ")
-
     print("      ", "=" * 23, sep="")

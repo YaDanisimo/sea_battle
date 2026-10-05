@@ -1,4 +1,4 @@
-from game.board import render
+from game.board import init_board, render
 from game.clear_console import clear_console
 
 
@@ -10,21 +10,32 @@ alpha = {'а':0, 'б':1, 'в':2, 'г':3, 'д':4, 'е':5, 'ж':6, 'з':7, 'и':8,
 ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
 
+def win_text(count_turns):
+    print(f" " * 13, "ПОБЕДА!")
+    print(f" "*4, f"Вы произвели выстрелов: {count_turns}")
+    print("\nНажмите Enter для перехода в меню")
+    input()
+
+
 def turn_check(request: str, board: list) -> (str, int):
     """
     Запрашивает координату у игрока до получения корректного ввода.
 
     Ввод считается корректным, если:
         * формат "<буква><число>"
-        * число от 1 до 10, буква из 'абвгдежзик'
+        * число от 1 до 10, буква из "абвгдежзик"
         * клетка ещё не обстреляна ('.')
 
-    :param request: приглашение к вводу
+    :param request: текст для игрока
     :param board: игровое поле
-    :return: кортеж (буква, число) - валидная координата
+    :return: корректная координата
     """
     while True:
         cell = input(request).replace(' ','').lower()
+
+        if cell == "выход":
+            return -1, -1
+
         if cell != "":
             cell_letter, cell_digit = cell[0], cell[1:]
 
@@ -52,12 +63,13 @@ def ship_destroyed(board: list, ship_positions: list) -> None:
         for x_add in (-1, 0, 1):
             for y_add in (-1, 0, 1):
                 y, x = pos_y + y_add, pos_x + x_add
+
                 if 0 <= y <= 9 and 0 <= x <= 9:
                     if board[y][x][0] == ".":
                         board[y][x][0] = "*"
 
 
-def game(board: list, ships_positions: dict) -> None:
+def game() -> None:
     """
     Основной игровой цикл морского боя.
 
@@ -65,30 +77,39 @@ def game(board: list, ships_positions: dict) -> None:
     и состояние кораблей, выводит результат. Завершается при уничтожении
     всех кораблей
 
-    :param board: игровое поле
-    :param ships_positions: позиции кораблей по их индексам
     :return: None
     """
+    # создание игрового поля с кораблями
+    board, ships_positions = init_board()
     render(board)
-    count_turns = 0
+    count_turns = 0 # количество сделанных ходов
 
     while True:
+        #запрос координаты
         letter, digit = turn_check('Введите координату: ', board) #а2
+
+        if letter == digit == -1:
+            break
+
         count_turns += 1
         cell = board[alpha[letter]][digit - 1]
-        clear_console()
+
+        #обработка хода
         hit_ship = 0 # 0 - мимо; 1 - попал; 2 - потопил
-        if cell[1] != SHIP:
+        if cell[1] != SHIP: # мимо
             cell[0] = '*'
-        elif cell[1] == SHIP:
+        elif cell[1] == SHIP: # попал
             cell[0] = "X"
             ships[cell[2]] -= 1
-            if ships[cell[2]] == 0:
+            #если корабль уничтожен
+            if ships[cell[2]] == 0: # потопил
                 ship_destroyed(board, ships_positions[cell[2]])
                 hit_ship = 2
             else:
                 hit_ship = 1
 
+        #обновление окна
+        clear_console()
         render(board)
         if hit_ship == 0:
             print("Мимо!")
@@ -96,12 +117,7 @@ def game(board: list, ships_positions: dict) -> None:
             print("Попал!")
         elif hit_ship == 2:
             print("Потопил!")
-            if  sum(ships) == 0:
+            # если все корабли уничтожены
+            if sum(ships) == 0:
+                win_text(count_turns)
                 break
-        #if digit == 8:
-        #    break
-    print("\t ПОБЕДА!")
-    print(f"Вы произвели выстрелов: {count_turns}")
-    print()
-    print("Нажмите Enter для перехода в меню")
-    input()
